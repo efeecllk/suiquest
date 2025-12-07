@@ -6,7 +6,7 @@
 
 **SuiQuest** is an educational platform that teaches Sui Move blockchain development through fun, interactive games. Each game covers different Move concepts, from basic objects to advanced randomness.
 
-🌐 **Live Demo**: [https://suiquest.vercel.app](https://suiquest.vercel.app)
+🌐 **Live Demo**: [suiquest.efeecllk.com](suiquest.efeecllk.com)
 
 ## 🎯 What's Inside?
 
