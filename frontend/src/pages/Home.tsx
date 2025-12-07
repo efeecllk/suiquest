@@ -1,7 +1,46 @@
+import { useEffect, useState } from 'react';
+import { ConnectButton, useCurrentAccount, useSuiClient } from '@mysten/dapp-kit';
 import GameCard from '../components/GameCard';
 import './Home.css';
 
 export default function Home() {
+    const account = useCurrentAccount();
+    const client = useSuiClient();
+    const [balance, setBalance] = useState<string | null>(null);
+    const [isLoadingBalance, setIsLoadingBalance] = useState(false);
+
+    // Fetch balance when wallet connects
+    useEffect(() => {
+        const fetchBalance = async () => {
+            if (!account) {
+                setBalance(null);
+                return;
+            }
+
+            setIsLoadingBalance(true);
+            try {
+                const balanceResult = await client.getBalance({
+                    owner: account.address,
+                });
+                // Convert from MIST to SUI (1 SUI = 10^9 MIST)
+                const suiBalance = Number(balanceResult.totalBalance) / 1_000_000_000;
+                setBalance(suiBalance.toFixed(4));
+            } catch (e) {
+                console.error('Error fetching balance:', e);
+                setBalance(null);
+            } finally {
+                setIsLoadingBalance(false);
+            }
+        };
+
+        fetchBalance();
+    }, [account, client]);
+
+    // Format address for display (0x1234...5678)
+    const formatAddress = (address: string) => {
+        return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    };
+
     return (
         <div className="home-page">
             {/* Hero Section */}
@@ -15,6 +54,25 @@ export default function Home() {
                 </div>
 
                 <div className="hero-content">
+                    {/* Wallet Connection & Balance Display */}
+                    <div className="wallet-section">
+                        <ConnectButton />
+                        {account && (
+                            <div className="wallet-info">
+                                <div className="wallet-address">
+                                    <span className="wallet-icon">👛</span>
+                                    <span>{formatAddress(account.address)}</span>
+                                </div>
+                                <div className="wallet-balance">
+                                    <span className="balance-icon">💰</span>
+                                    <span className="balance-value">
+                                        {isLoadingBalance ? 'Loading...' : `${balance ?? '0'} SUI`}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                     <div className="hero-logo-container">
                         <img
                             src="/sui-arcade-logo.png"
@@ -140,12 +198,12 @@ export default function Home() {
                     />
 
                     <GameCard
-                        title="Dice Game"
-                        description="On-chain dice gambling. Learn sui::random, Events & Stake/Reward!"
+                        title="Dice Game (Beta)"
+                        description="On-chain dice gambling. Learn sui::random, Events &amp; Stake/Reward!"
                         image="/dice-game-logo.jpg"
                         path="/games/dice-game"
                         isNew={true}
-                        tags={['random', 'events', 'stake', 'gambling']}
+                        tags={['random', 'events', 'stake', 'beta']}
                     />
 
                     {/* Coming Soon Cards */}

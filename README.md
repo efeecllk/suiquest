@@ -16,7 +16,7 @@
 | **Sui Bank** 🏦 | Coin, Balance, Transfer | DeFi simulator for token operations |
 | **Card Battle** ⚔️ | Dynamic NFT, Vector, Object Wrapping | Pokemon-style NFT card battles |
 | **10.00s Challenge** ⏱️ | Shared Objects, Events, Clock | Stop timer at exactly 10 seconds |
-| **Dice Game** 🎲 | sui::random, Events, Staking | On-chain gambling with randomness |
+| **Dice Game** 🎲 *(Beta)* | sui::random, Events, Staking | On-chain gambling with randomness |
 
 ## 📁 Project Structure
 
