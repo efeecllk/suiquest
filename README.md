@@ -4,6 +4,10 @@
   <img src="frontend/public/sui-arcade-logo.png" alt="SuiQuest Logo" width="200" />
 </p>
 
+<p align="center">
+  🎬 <a href="https://youtu.be/Dww5MlD3-_U"><strong>SuiQuest Demo Video</strong></a>
+</p>
+
 **SuiQuest** is an educational platform that teaches Sui Move blockchain development through fun, interactive games. Each game covers different Move concepts, from basic objects to advanced randomness.
 
 🌐 **Live Demo**: [suiquest.efeecllk.com](https://suiquest.efeecllk.com)
