@@ -1,116 +1,144 @@
-Sui 10-Second Challenge + Global Leaderboard
-===========================================
+# 🎮 SuiQuest - Learn Move on Sui Through Interactive Games
 
-Players try to stop a timer as close as possible to **10.00 seconds (10,000 ms)**. Each player holds an owned `Game` object for their personal best, while everyone updates a shared `Leaderboard` object. The Sui on-chain `Clock` is used for timing, so the diff is always computed on-chain.
+<p align="center">
+  <img src="frontend/public/sui-arcade-logo.png" alt="SuiQuest Logo" width="200" />
+</p>
 
-Repo layout
------------
-- `move/` — Sui Move package with the `ten_second::game` module and a minimal test.
-- `frontend/` — React + TypeScript single-page app using Sui dApp Kit for wallet connect and transactions.
+**SuiQuest** is an educational platform that teaches Sui Move blockchain development through fun, interactive games. Each game covers different Move concepts, from basic objects to advanced randomness.
 
-On-chain design (move/sources/game.move)
-----------------------------------------
-- `struct Game has key { id: UID, best_diff_ms: u64, active_start_ms: Option<u64> }` (owned per player).
-- `struct Leaderboard has key { id: UID, entries: vector<Entry> }` shared object with linear search.
-- `struct Entry { player: address, best_diff_ms: u64 }` and `StoppedEvent` emitted on every stop.
-- Target time is `10_000` ms. `start` records `Clock::timestamp_ms`; `stop` computes `abs(elapsed - target)`, updates `game.best_diff_ms`, and inserts/replaces the player on the shared leaderboard.
-- Entry functions: `create_leaderboard`, `create_game`, `start`, `stop`, `reset_best`.
-- Error codes: `1` already started, `2` not started.
-- Basic test exercises create → start → stop → improved best + leaderboard update with a testing clock.
+🌐 **Live Demo**: [https://suiquest.vercel.app](https://suiquest.vercel.app)
 
-Move usage
-----------
-1) Build/tests
+## 🎯 What's Inside?
+
+| Game | Move Concepts | Description |
+|------|--------------|-------------|
+| **Sui Pet** 🐾 | Objects, Ownership, Mutable References | Raise your on-chain virtual pet |
+| **Sui Bank** 🏦 | Coin, Balance, Transfer | DeFi simulator for token operations |
+| **Card Battle** ⚔️ | Dynamic NFT, Vector, Object Wrapping | Pokemon-style NFT card battles |
+| **10.00s Challenge** ⏱️ | Shared Objects, Events, Clock | Stop timer at exactly 10 seconds |
+| **Dice Game** 🎲 | sui::random, Events, Staking | On-chain gambling with randomness |
+
+## 📁 Project Structure
+
 ```
+suiquest/
+├── move/                          # Sui Move smart contracts
+│   └── sources/
+│       ├── game.move              # 10-Second Challenge + Leaderboard
+│       ├── sui_pet.move           # Virtual Pet game
+│       ├── sui_bank.move          # Bank/DeFi simulator
+│       ├── card_battle.move       # NFT Card Battle game
+│       └── dice_game.move         # Dice gambling with randomness
+│
+└── frontend/                      # React + TypeScript dApp
+    └── src/
+        ├── pages/
+        │   ├── Home.tsx           # Landing page with game cards
+        │   ├── SuiPet.tsx         # Pet game UI
+        │   ├── SuiBank.tsx        # Bank game UI
+        │   ├── CardBattle.tsx     # Card battle UI
+        │   ├── TenSecondChallenge.tsx
+        │   └── DiceGame.tsx       # Dice game UI
+        └── config.ts              # Package IDs & network config
+```
+
+## 🚀 Quick Start
+
+### 1. Deploy Move Contracts
+
+```bash
 cd move
 sui move build
 sui move test
-```
-
-2) Publish (grab the package ID from the output)
-```
 sui client publish --gas-budget 100000000
 ```
 
-3) Example calls (replace placeholders)
-```
-PACKAGE=<package_id_from_publish>
-GAME=<your_game_object_id>
-BOARD=<shared_leaderboard_object_id>
-CLOCK=0x6
+Save the package ID from the output.
 
-# Create shared leaderboard once
-sui client call --package $PACKAGE --module game --function create_leaderboard --gas-budget 20000000
+### 2. Configure Frontend
 
-# Create your owned game object
-sui client call --package $PACKAGE --module game --function create_game --gas-budget 20000000
+Create `frontend/.env.local`:
 
-# Start then stop (Clock object is required)
-sui client call --package $PACKAGE --module game --function start --args $GAME $CLOCK --gas-budget 20000000
-sui client call --package $PACKAGE --module game --function stop --args $GAME $BOARD $CLOCK --gas-budget 20000000
+```env
+VITE_PACKAGE_ID=<your_package_id>
+VITE_SUI_NETWORK=testnet
 ```
 
-Frontend (frontend/)
---------------------
-Prereqs: Node 18+. Update `frontend/.env.local` with:
-```
-VITE_PACKAGE_ID=<your published package id>
-VITE_SUI_NETWORK=testnet   # or devnet/mainnet
-```
+### 3. Run Frontend
 
-Install + run:
-```
+```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Page sections:
-- Wallet connect (Sui dApp Kit).
-- Setup: buttons to create the shared leaderboard and your owned game, plus manual ID inputs.
-- Game panel: big Start/Stop buttons that call on-chain `start`/`stop` with the Clock object; shows last diff from the `StoppedEvent` and your best diff from the Game object.
-- Global leaderboard: fetches the shared object, sorts client-side by `best_diff_ms`, and shows the top 10 players.
+Open http://localhost:5173
 
-Demo flow
----------
-1) Publish the Move package and set `VITE_PACKAGE_ID`.
-2) Create the leaderboard (shared) via the UI or CLI, paste the ID.
-3) Create your Game object (owned) via the UI.
-4) Click **Start**, wait, then **Stop**. The diff is computed on-chain via `Clock::timestamp_ms`.
-5) Refresh: your Game stores the new best, and the shared Leaderboard records/updates your score. Everyone sees the same top list.
+## 📚 Learning Path
 
-Folder structure suggestion
----------------------------
-- `move/Move.toml`
-- `move/sources/game.move`
-- `frontend/src/App.tsx`
-- `frontend/src/config.ts`
-- `frontend/src/main.tsx`, `frontend/src/App.css`, `frontend/src/index.css`
+We recommend following this order:
 
-Transaction-building snippets (TypeScript)
-------------------------------------------
-```ts
-// Create leaderboard
-const tx = new Transaction();
-tx.moveCall({ target: `${PACKAGE_ID}::game::create_leaderboard` });
+1. **Sui Pet** → Objects, Ownership, `&mut` references
+2. **Sui Bank** → `Coin<SUI>` vs `Balance<SUI>`, transfers
+3. **Card Battle** → Dynamic NFTs, vectors, object wrapping
+4. **10.00s Challenge** → Shared objects, events, `Clock`
+5. **Dice Game** → `sui::random`, staking, rewards
 
-// Create game
-tx.moveCall({ target: `${PACKAGE_ID}::game::create_game` });
+## ✨ Features
 
-// Start
-tx.moveCall({
-  target: `${PACKAGE_ID}::game::start`,
-  arguments: [tx.object(gameId), tx.object(SUI_CLOCK_OBJECT_ID)],
-});
+- 🎮 **5+ Interactive Games** - Learn by doing, not reading
+- 📖 **Built-in Explanations** - Every action has a tutorial sidebar
+- ⛓️ **100% On-Chain** - Real blockchain transactions on Sui Testnet
+- 🎨 **Modern UI** - Cyberpunk/neon aesthetic with animations
+- 💅 **Responsive Design** - Works on desktop and mobile
 
-// Stop (owned Game + shared Leaderboard + on-chain Clock)
-tx.moveCall({
-  target: `${PACKAGE_ID}::game::stop`,
-  arguments: [tx.object(gameId), tx.object(leaderboardId), tx.object(SUI_CLOCK_OBJECT_ID)],
-});
+## 🛠️ Tech Stack
+
+- **Blockchain**: Sui Network (Testnet)
+- **Smart Contracts**: Move Language
+- **Frontend**: React + TypeScript + Vite
+- **Wallet**: Sui dApp Kit
+- **Styling**: CSS with glassmorphism effects
+
+## 📖 Educational Content
+
+Each game module includes:
+- **Detailed code comments** explaining Move concepts
+- **Interactive tutorial sidebar** in the frontend
+- **Step-by-step explanations** of blockchain operations
+
+### Key Concepts Covered
+
+| Concept | Game(s) |
+|---------|---------|
+| Object Model (`has key, store`) | Sui Pet, Card Battle |
+| Ownership & Transfer | All games |
+| Mutable References (`&mut`) | Sui Pet, Card Battle |
+| `Coin<T>` vs `Balance<T>` | Sui Bank, Dice Game |
+| Shared Objects | 10.00s Challenge, Dice Game |
+| Events (`event::emit`) | 10.00s Challenge, Dice Game |
+| Clock Object | 10.00s Challenge |
+| `sui::random` | Dice Game |
+| Vectors | Card Battle |
+| Dynamic NFTs | Card Battle |
+| Object Wrapping | Card Battle |
+
+## 🌐 Deployment
+
+The frontend is deployed on Vercel:
+
+```bash
+cd frontend
+npm run build
+npx vercel --prod
 ```
 
-Notes
------
-- The Move test uses `Clock::create_for_testing` and `Clock::set_for_testing`; production calls use the real shared clock at `0x6`.
-- Leaderboard search is intentionally linear to keep the prototype simple.
+## 📜 License
+
+MIT License - feel free to use this for educational purposes!
+
+---
+
+<p align="center">
+  Built with 💙 for the Sui Community
+</p>
