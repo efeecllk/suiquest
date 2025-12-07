@@ -18,14 +18,14 @@ export default function Home() {
                     <div className="hero-logo-container">
                         <img
                             src="/sui-arcade-logo.png"
-                            alt="Sui Arcade"
+                            alt="SuiQuest"
                             className="hero-logo"
                         />
                         <div className="logo-glow"></div>
                     </div>
 
                     <h1 className="hero-title">
-                        <span className="gradient-text">Sui Arcade</span>
+                        <span className="gradient-text">SuiQuest</span>
                     </h1>
 
                     <p className="hero-subtitle">
@@ -72,7 +72,7 @@ export default function Home() {
 
             {/* Features Section */}
             <section className="features-section">
-                <h2 className="section-title">Why Learn with Sui Arcade?</h2>
+                <h2 className="section-title">Why Learn with SuiQuest?</h2>
                 <div className="features-grid">
                     <div className="feature-card">
                         <div className="feature-icon">🎯</div>
@@ -229,8 +229,8 @@ export default function Home() {
             <footer className="home-footer">
                 <div className="footer-content">
                     <div className="footer-logo">
-                        <img src="/sui-arcade-logo.png" alt="Sui Arcade" />
-                        <span>Sui Arcade</span>
+                        <img src="/sui-arcade-logo.png" alt="SuiQuest" />
+                        <span>SuiQuest</span>
                     </div>
                     <p className="footer-tagline">Learn Move. Build on Sui. Have Fun.</p>
                     <div className="footer-links">
@@ -239,7 +239,7 @@ export default function Home() {
                         <a href="https://github.com/MystenLabs/sui" target="_blank" rel="noopener noreferrer">GitHub</a>
                         <a href="https://discord.gg/sui" target="_blank" rel="noopener noreferrer">Discord</a>
                     </div>
-                    <p className="footer-copyright">© 2024 Sui Arcade. Built with 💙 for the Sui Community.</p>
+                    <p className="footer-copyright">© 2024 SuiQuest. Built with 💙 for the Sui Community.</p>
                 </div>
             </footer>
         </div>
