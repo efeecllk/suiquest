@@ -107,7 +107,7 @@ export default function Home() {
                 <div className="stats-container">
                     <div className="stat-card">
                         <div className="stat-icon">🎮</div>
-                        <div className="stat-value">5+</div>
+                        <div className="stat-value">4+</div>
                         <div className="stat-label">Interactive Games</div>
                     </div>
                     <div className="stat-card">
@@ -197,15 +197,6 @@ export default function Home() {
                         tags={['dynamic-nft', 'vector', 'struct', 'wrapping']}
                     />
 
-                    <GameCard
-                        title="Dice Game (Beta)"
-                        description="On-chain dice gambling. Learn sui::random, Events &amp; Stake/Reward!"
-                        image="/dice-game-logo.jpg"
-                        path="/games/dice-game"
-                        isNew={true}
-                        tags={['random', 'events', 'stake', 'beta']}
-                    />
-
                     {/* Coming Soon Cards */}
                     <div className="game-card coming-soon-card">
                         <div className="card-thumb">
@@ -270,14 +261,6 @@ export default function Home() {
                         <div className="step-content">
                             <h4>10.00s Challenge</h4>
                             <p>Explore Shared Objects, Events, and the Clock.</p>
-                        </div>
-                    </div>
-                    <div className="path-connector"></div>
-                    <div className="path-step">
-                        <div className="step-number">5</div>
-                        <div className="step-content">
-                            <h4>Dice Game</h4>
-                            <p>Advanced: sui::random, Staking, and Rewards.</p>
                         </div>
                     </div>
                 </div>

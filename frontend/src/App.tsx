@@ -4,7 +4,6 @@ import TenSecondChallenge from './pages/TenSecondChallenge';
 import SuiPet from './pages/SuiPet';
 import SuiBank from './pages/SuiBank';
 import CardBattle from './pages/CardBattle';
-import DiceGame from './pages/DiceGame';
 import './App.css';
 
 function App() {
@@ -17,7 +16,6 @@ function App() {
                     <Route path="/games/sui-pet" element={<SuiPet />} />
                     <Route path="/games/sui-bank" element={<SuiBank />} />
                     <Route path="/games/card-battle" element={<CardBattle />} />
-                    <Route path="/games/dice-game" element={<DiceGame />} />
                 </Routes>
             </div>
         </BrowserRouter>

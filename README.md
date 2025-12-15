@@ -20,7 +20,6 @@
 | **Sui Bank** 🏦 | Coin, Balance, Transfer | DeFi simulator for token operations |
 | **Card Battle** ⚔️ | Dynamic NFT, Vector, Object Wrapping | Pokemon-style NFT card battles |
 | **10.00s Challenge** ⏱️ | Shared Objects, Events, Clock | Stop timer at exactly 10 seconds |
-| **Dice Game** 🎲 *(Beta)* | sui::random, Events, Staking | On-chain gambling with randomness |
 
 ## 📁 Project Structure
 
@@ -31,8 +30,7 @@ suiquest/
 │       ├── game.move              # 10-Second Challenge + Leaderboard
 │       ├── sui_pet.move           # Virtual Pet game
 │       ├── sui_bank.move          # Bank/DeFi simulator
-│       ├── card_battle.move       # NFT Card Battle game
-│       └── dice_game.move         # Dice gambling with randomness
+│       └── card_battle.move       # NFT Card Battle game
 │
 └── frontend/                      # React + TypeScript dApp
     └── src/
@@ -41,8 +39,7 @@ suiquest/
         │   ├── SuiPet.tsx         # Pet game UI
         │   ├── SuiBank.tsx        # Bank game UI
         │   ├── CardBattle.tsx     # Card battle UI
-        │   ├── TenSecondChallenge.tsx
-        │   └── DiceGame.tsx       # Dice game UI
+        │   └── TenSecondChallenge.tsx
         └── config.ts              # Package IDs & network config
 ```
 
@@ -86,11 +83,10 @@ We recommend following this order:
 2. **Sui Bank** → `Coin<SUI>` vs `Balance<SUI>`, transfers
 3. **Card Battle** → Dynamic NFTs, vectors, object wrapping
 4. **10.00s Challenge** → Shared objects, events, `Clock`
-5. **Dice Game** → `sui::random`, staking, rewards
 
 ## ✨ Features
 
-- 🎮 **5+ Interactive Games** - Learn by doing, not reading
+- 🎮 **4+ Interactive Games** - Learn by doing, not reading
 - 📖 **Built-in Explanations** - Every action has a tutorial sidebar
 - ⛓️ **100% On-Chain** - Real blockchain transactions on Sui Testnet
 - 🎨 **Modern UI** - Cyberpunk/neon aesthetic with animations
@@ -118,11 +114,10 @@ Each game module includes:
 | Object Model (`has key, store`) | Sui Pet, Card Battle |
 | Ownership & Transfer | All games |
 | Mutable References (`&mut`) | Sui Pet, Card Battle |
-| `Coin<T>` vs `Balance<T>` | Sui Bank, Dice Game |
-| Shared Objects | 10.00s Challenge, Dice Game |
-| Events (`event::emit`) | 10.00s Challenge, Dice Game |
+| `Coin<T>` vs `Balance<T>` | Sui Bank |
+| Shared Objects | 10.00s Challenge |
+| Events (`event::emit`) | 10.00s Challenge |
 | Clock Object | 10.00s Challenge |
-| `sui::random` | Dice Game |
 | Vectors | Card Battle |
 | Dynamic NFTs | Card Battle |
 | Object Wrapping | Card Battle |
